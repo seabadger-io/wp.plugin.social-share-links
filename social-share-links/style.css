@@ -2,9 +2,12 @@
   width: 100%;
   text-align: center;
   opacity: 0.8;
+  color: rgb(255, 180, 67)!important;
 }
 
 .social-share-links .btn {
-  color: white;
-  background-color: black;
+  color: #fff!important;
+  background-color: rgb(255, 180, 67)!important;
+  width: 2rem;
+  padding: 0.5rem;
 }

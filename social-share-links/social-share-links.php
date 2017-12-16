@@ -37,10 +37,12 @@ function sbmdssl_deactivate() {
 }
 
 function sbmdssl_add_links( $content ) {
-	$social_links = '<div class="social-share-links">Liked? Share! ' .
+	$social_links = '<div class="social-share-links">' .
+	'<i class="fa fa-share"></i><span class="sr-only">Share</span>' .
 	sbmdssl_twitter_link() .
 	sbmdssl_facebook_link() .
 	sbmdssl_gplus_link() .
+	sbmdssl_linkedin_link() .
 	'</div>';
 	$content .= $social_links;
 	return $content;
@@ -57,20 +59,33 @@ add_action( 'admin_init', 'sbmdssl_admin_init' );
 function sbmdssl_gplus_link() {
 	$button = '<a target="_blank" href="https://plus.google.com/share?url=' .
 	urlencode( get_permalink() ) . '" class="btn btn-sm" title="Share on G+" rel="nofollow">' .
-	'<i class="fa fa-gplus"></i><span class="sr-only">Share on G+</span></a>';
+	'<i class="fa fa-google-plus"></i><span class="sr-only">Share on G+</span></a>';
 	return $button;
 }
 
 function sbmdssl_twitter_link() {
-	$button = '<a target="_blank" href="https://twitter.com/share?text=' .
-	urlencode( get_the_title() ) . '" class="btn btn-sm" title="Tweet" rel="nofollow">' .
-	'<i class="fa fa-twitter"></i><span class="sr-only">Tweet</span></a>';
+	$button = sprintf( '<a target="_blank" href="https://twitter.com/intent/tweet?url=%s&text=%s&hashtags=%s"' .
+		' class="btn btn-sm" title="Tweet" rel="nofollow">' .
+		'<i class="fa fa-twitter"></i><span class="sr-only">Tweet</span></a>',
+		urlencode( get_permalink() ),
+		urlencode( get_the_title() ),
+		urlencode( get_the_tag_list( '', ',', '' ) )
+	);
 	return $button;
 }
 
 function sbmdssl_facebook_link() {
-	$button = ' <a target="_blank" href="http://www.facebook.com/sharer.php?u=' .
+	$button = '<a target="_blank" href="http://www.facebook.com/sharer.php?u=' .
 	urlencode( get_permalink() ) . '" class="btn btn-sm" title="Share on Facebook" ' .
 	'rel="nofollow"><i class="fa fa-facebook"></i><span class="sr-only">Share on Facebook</span></a>';
 	return $button;
+}
+
+function sbmdssl_linkedin_link() {
+	$button = sprintf( '<a target="_blank" href="https://www.linkedin.com/shareArticle?url=%s&title=%s"' .
+		' class="btn btn-sm" title="Share on LinkedIn" rel="nofollow">' .
+		'<i class="fa fa-linkedin"></i><span class="sr-only">Share on LinkedIn</span></a>',
+		urlencode( get_permalink() ),
+		urlencode( get_the_title() )
+	);
 }
