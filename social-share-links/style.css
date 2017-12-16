@@ -5,6 +5,10 @@
   color: rgb(255, 180, 67)!important;
 }
 
+.social-share-links:hover {
+  color: darkred!important;
+}
+
 .social-share-links .btn {
   color: #fff!important;
   background-color: rgb(255, 180, 67)!important;
@@ -15,4 +19,8 @@
 .social-share-links .btn.btn-sm {
   width: 2rem;
   padding: 0.5rem;
+}
+
+.social-share-links .btn.btn-sm .fa {
+  font-size: 1rem;
 }
