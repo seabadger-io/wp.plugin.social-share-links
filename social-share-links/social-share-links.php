@@ -104,7 +104,11 @@ function sbmdssl_reddit_link() {
 
 function sbmdssl_tags() {
 	$tags = array();
-	foreach ( get_the_tags() as $tag ) {
+	$taga = get_the_tags();
+	if ( ! is_array() || ! count( $taga ) ) {
+		return '';
+	}
+	foreach ( $taga as $tag ) {
 		array_push( $tags, $tag->name );
 	}
 	return implode( ',', $tags );
