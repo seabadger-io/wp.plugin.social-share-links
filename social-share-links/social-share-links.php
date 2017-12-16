@@ -37,7 +37,7 @@ function sbmdssl_deactivate() {
 }
 
 function sbmdssl_add_links( $content ) {
-	$social_links = '<div class="social-share-links">' .
+	$social_links = '<br class="clear"><div class="social-share-links">' .
 	'<i class="fa fa-share-alt"></i><span class="sr-only">Share</span>' .
 	sbmdssl_twitter_link() .
 	sbmdssl_facebook_link() .
