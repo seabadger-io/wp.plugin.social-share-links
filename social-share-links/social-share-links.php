@@ -38,7 +38,7 @@ function sbmdssl_deactivate() {
 
 function sbmdssl_add_links( $content ) {
 	$social_links = '<div class="social-share-links">' .
-	'<i class="fa fa-share"></i><span class="sr-only">Share</span>' .
+	'<i class="fa fa-share-alt"></i><span class="sr-only">Share</span>' .
 	sbmdssl_twitter_link() .
 	sbmdssl_facebook_link() .
 	sbmdssl_gplus_link() .
@@ -69,7 +69,7 @@ function sbmdssl_twitter_link() {
 		'<i class="fa fa-twitter"></i><span class="sr-only">Tweet</span></a>',
 		urlencode( get_permalink() ),
 		urlencode( get_the_title() ),
-		urlencode( get_the_tag_list( '', ',', '' ) )
+		urlencode( sbmdssl_tags() )
 	);
 	return $button;
 }
@@ -89,4 +89,12 @@ function sbmdssl_linkedin_link() {
 		urlencode( get_the_title() )
 	);
 	return $button;
+}
+
+function sbmdssl_tags() {
+	$tags = array();
+	foreach ( get_tags() as $tag ) {
+		array_push( $tags, $tag->name );
+	}
+	return implode( ',', $tags );
 }
