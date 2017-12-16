@@ -88,4 +88,5 @@ function sbmdssl_linkedin_link() {
 		urlencode( get_permalink() ),
 		urlencode( get_the_title() )
 	);
+	return $button;
 }
