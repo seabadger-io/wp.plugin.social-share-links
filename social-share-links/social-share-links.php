@@ -69,7 +69,7 @@ function sbmdssl_twitter_link() {
 		' class="btn btn-sm" title="Tweet" rel="nofollow">' .
 		'<i class="fa fa-twitter"></i><span class="sr-only">Tweet</span></a>',
 		urlencode( get_permalink() ),
-		urlencode( get_the_title() ),
+		urlencode( wp_strip_all_tags( get_the_title() ) ),
 		urlencode( sbmdssl_tags() )
 	);
 	return $button;
@@ -87,7 +87,7 @@ function sbmdssl_linkedin_link() {
 		' class="btn btn-sm" title="Share on LinkedIn" rel="nofollow">' .
 		'<i class="fa fa-linkedin"></i><span class="sr-only">Share on LinkedIn</span></a>',
 		urlencode( get_permalink() ),
-		urlencode( get_the_title() )
+		urlencode( wp_strip_all_tags( get_the_title() ) )
 	);
 	return $button;
 }
@@ -97,7 +97,7 @@ function sbmdssl_reddit_link() {
 		' class="btn btn-sm" title="Share on Reddit" rel="nofollow">' .
 		'<i class="fa fa-reddit"></i><span class="sr-only">Share on Reddit</span></a>',
 		urlencode( get_permalink() ),
-		urlencode( get_the_title() )
+		urlencode( wp_strip_all_tags( get_the_title() ) )
 	);
 	return $button;
 }
