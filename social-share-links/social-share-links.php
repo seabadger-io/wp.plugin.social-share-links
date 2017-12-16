@@ -49,11 +49,11 @@ function sbmdssl_add_links( $content ) {
 }
 add_filter( 'the_content', 'sbmdssl_add_links', 20 );
 
-function sbmdssl_admin_init() {
+function sbmdssl_enqueue_style() {
 	wp_register_style( 'sbmdsslcss', plugins_url( 'style.css', __FILE__ ) );
 	wp_enqueue_style( 'sbmdsslcss' );
 }
-add_action( 'admin_init', 'sbmdssl_admin_init' );
+add_action( 'wp_enqueue_scripts', 'sbmdssl_enqueue_style' );
 
 
 function sbmdssl_gplus_link() {
