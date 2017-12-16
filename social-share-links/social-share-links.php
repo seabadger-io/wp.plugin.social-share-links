@@ -93,7 +93,7 @@ function sbmdssl_linkedin_link() {
 
 function sbmdssl_tags() {
 	$tags = array();
-	foreach ( get_tags() as $tag ) {
+	foreach ( get_the_tags() as $tag ) {
 		array_push( $tags, $tag->name );
 	}
 	return implode( ',', $tags );
