@@ -42,6 +42,7 @@ function sbmdssl_add_links( $content ) {
 	sbmdssl_facebook_link() .
 	sbmdssl_gplus_link() .
 	'</div>';
+	$content .= $social_links;
 	return $content;
 }
 add_filter( 'the_content', 'sbmdssl_add_links', 20 );
