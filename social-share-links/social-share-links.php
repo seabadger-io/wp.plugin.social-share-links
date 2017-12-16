@@ -105,7 +105,7 @@ function sbmdssl_reddit_link() {
 function sbmdssl_tags() {
 	$tags = array();
 	$taga = get_the_tags();
-	if ( ! is_array() || ! count( $taga ) ) {
+	if ( ! is_array( $taga ) || ! count( $taga ) ) {
 		return '';
 	}
 	foreach ( $taga as $tag ) {
