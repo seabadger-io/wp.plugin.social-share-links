@@ -43,6 +43,7 @@ function sbmdssl_add_links( $content ) {
 	sbmdssl_facebook_link() .
 	sbmdssl_gplus_link() .
 	sbmdssl_linkedin_link() .
+	sbmdssl_reddit_link() .
 	'</div>';
 	$content .= $social_links;
 	return $content;
@@ -85,6 +86,16 @@ function sbmdssl_linkedin_link() {
 	$button = sprintf( '<a target="_blank" href="https://www.linkedin.com/shareArticle?url=%s&title=%s"' .
 		' class="btn btn-sm" title="Share on LinkedIn" rel="nofollow">' .
 		'<i class="fa fa-linkedin"></i><span class="sr-only">Share on LinkedIn</span></a>',
+		urlencode( get_permalink() ),
+		urlencode( get_the_title() )
+	);
+	return $button;
+}
+
+function sbmdssl_reddit_link() {
+	$button = sprintf( '<a target="_blank" href="https://reddit.com/submit?url=%s&title=%s"' .
+		' class="btn btn-sm" title="Share on Reddit" rel="nofollow">' .
+		'<i class="fa fa-reddit"></i><span class="sr-only">Share on Reddit</span></a>',
 		urlencode( get_permalink() ),
 		urlencode( get_the_title() )
 	);
