@@ -37,6 +37,9 @@ function sbmdssl_deactivate() {
 }
 
 function sbmdssl_add_links( $content ) {
+	if ( ! is_single() ) {
+		return $content;
+	}
 	$social_links = '<br class="clear"><div class="social-share-links">' .
 	'<i class="fa fa-share-alt"></i><span class="sr-only">Share this page</span>' .
 	sbmdssl_twitter_link() .
@@ -59,14 +62,14 @@ add_action( 'wp_enqueue_scripts', 'sbmdssl_enqueue_style' );
 
 function sbmdssl_gplus_link() {
 	$button = '<a target="_blank" href="https://plus.google.com/share?url=' .
-	urlencode( get_permalink() ) . '" class="btn btn-sm" title="Share on G+" rel="nofollow">' .
+	urlencode( get_permalink() ) . '" class="btn btn-sm themecolor" title="Share on G+" rel="nofollow">' .
 	'<i class="fa fa-google-plus"></i><span class="sr-only">Share on G+</span></a>';
 	return $button;
 }
 
 function sbmdssl_twitter_link() {
 	$button = sprintf( '<a target="_blank" href="https://twitter.com/intent/tweet?url=%s&text=%s&hashtags=%s"' .
-		' class="btn btn-sm" title="Tweet" rel="nofollow">' .
+		' class="btn btn-sm themecolor" title="Tweet" rel="nofollow">' .
 		'<i class="fa fa-twitter"></i><span class="sr-only">Tweet</span></a>',
 		urlencode( get_permalink() ),
 		urlencode( wp_strip_all_tags( get_the_title() ) ),
@@ -77,14 +80,14 @@ function sbmdssl_twitter_link() {
 
 function sbmdssl_facebook_link() {
 	$button = '<a target="_blank" href="http://www.facebook.com/sharer.php?u=' .
-	urlencode( get_permalink() ) . '" class="btn btn-sm" title="Share on Facebook" ' .
+	urlencode( get_permalink() ) . '" class="btn btn-sm themecolor" title="Share on Facebook" ' .
 	'rel="nofollow"><i class="fa fa-facebook"></i><span class="sr-only">Share on Facebook</span></a>';
 	return $button;
 }
 
 function sbmdssl_linkedin_link() {
 	$button = sprintf( '<a target="_blank" href="https://www.linkedin.com/shareArticle?url=%s&title=%s"' .
-		' class="btn btn-sm" title="Share on LinkedIn" rel="nofollow">' .
+		' class="btn btn-sm themecolor" title="Share on LinkedIn" rel="nofollow">' .
 		'<i class="fa fa-linkedin"></i><span class="sr-only">Share on LinkedIn</span></a>',
 		urlencode( get_permalink() ),
 		urlencode( wp_strip_all_tags( get_the_title() ) )
@@ -94,7 +97,7 @@ function sbmdssl_linkedin_link() {
 
 function sbmdssl_reddit_link() {
 	$button = sprintf( '<a target="_blank" href="https://reddit.com/submit?url=%s&title=%s"' .
-		' class="btn btn-sm" title="Share on Reddit" rel="nofollow">' .
+		' class="btn btn-sm themecolor" title="Share on Reddit" rel="nofollow">' .
 		'<i class="fa fa-reddit"></i><span class="sr-only">Share on Reddit</span></a>',
 		urlencode( get_permalink() ),
 		urlencode( wp_strip_all_tags( get_the_title() ) )
