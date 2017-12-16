@@ -1,0 +1,10 @@
+.social-share-links {
+  width: 100%;
+  text-align: center;
+  opacity: 0.8;
+}
+
+.social-share-links .btn {
+  color: white;
+  background-color: black;
+}

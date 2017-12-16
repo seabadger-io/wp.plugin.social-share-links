@@ -37,7 +37,7 @@ function sbmdssl_deactivate() {
 }
 
 function sbmdssl_add_links( $content ) {
-	$social_links = '<div class="align-center col-12">Share on ' .
+	$social_links = '<div class="social-share-links">Liked? Share! ' .
 	sbmdssl_twitter_link() .
 	sbmdssl_facebook_link() .
 	sbmdssl_gplus_link() .
@@ -47,27 +47,30 @@ function sbmdssl_add_links( $content ) {
 }
 add_filter( 'the_content', 'sbmdssl_add_links', 20 );
 
-// function sbti_admin_init() {
-// }
-// add_action('admin_init', 'sbti_admin_init');
+function sbmdssl_admin_init() {
+	wp_register_style( 'sbmdsslcss', plugins_url( 'style.css', __FILE__ ) );
+	wp_enqueue_style( 'sbmdsslcss' );
+}
+add_action( 'admin_init', 'sbmdssl_admin_init' );
+
 
 function sbmdssl_gplus_link() {
 	$button = '<a target="_blank" href="https://plus.google.com/share?url=' .
-	urlencode( get_permalink() ) . '" class="btn btn-sm btn-social" title="Share on G+" rel="nofollow">' .
+	urlencode( get_permalink() ) . '" class="btn btn-sm" title="Share on G+" rel="nofollow">' .
 	'<i class="fa fa-gplus"></i><span class="sr-only">Share on G+</span></a>';
 	return $button;
 }
 
 function sbmdssl_twitter_link() {
 	$button = '<a target="_blank" href="https://twitter.com/share?text=' .
-	urlencode( get_the_title() ) . '" class="btn btn-sm btn-social" title="Tweet" rel="nofollow">' .
+	urlencode( get_the_title() ) . '" class="btn btn-sm" title="Tweet" rel="nofollow">' .
 	'<i class="fa fa-twitter"></i><span class="sr-only">Tweet</span></a>';
 	return $button;
 }
 
 function sbmdssl_facebook_link() {
 	$button = ' <a target="_blank" href="http://www.facebook.com/sharer.php?u=' .
-	urlencode( get_permalink() ) . '" class="simple-share ss-facebook" title="Share on Facebook" ' .
+	urlencode( get_permalink() ) . '" class="btn btn-sm" title="Share on Facebook" ' .
 	'rel="nofollow"><i class="fa fa-facebook"></i><span class="sr-only">Share on Facebook</span></a>';
 	return $button;
 }
