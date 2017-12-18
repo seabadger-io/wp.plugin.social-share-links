@@ -3,7 +3,7 @@
 Plugin Name:  SeaBadgerMD Social Share Links
 Plugin URI:   https://seabadger.io/
 Description:  Add static social share links to posts in SeaBadgerMD theme
-Version:      1.0.0
+Version:      1.1.0
 Author:       SeaBadger.io
 Author URI:   https://seabadger.io/about
 License:      GNU GPLv3 or later
@@ -37,7 +37,8 @@ function sbmdssl_deactivate() {
 }
 
 function sbmdssl_add_links( $content ) {
-	if ( ! is_single() ) {
+	$hide_links = get_post_meta( $post->ID, '_sbmdssl_hide_social_share_links', true ) || 0;
+	if ( $hide_links || ( ! is_single() && ! is_page() ) ) {
 		return $content;
 	}
 	$social_links = '<br class="clear"><div class="social-share-links">' .
@@ -105,6 +106,7 @@ function sbmdssl_reddit_link() {
 	return $button;
 }
 
+/* tag names list, separated by comma, used for twitter hashtags */
 function sbmdssl_tags() {
 	$tags = array();
 	$taga = get_the_tags();
@@ -116,3 +118,49 @@ function sbmdssl_tags() {
 	}
 	return implode( ',', $tags );
 }
+
+function sbmdssl_add_metabox() {
+	$screens = array( 'post', 'page' );
+	foreach ( $screens as $screen ) {
+		add_meta_box(
+			'sbmdssl_social_share_links_box',
+			esc_html__( 'Social share links',  'sbmdssl' ),
+			'smdbssl_social_share_links_html',
+			$screen
+		);
+	}
+}
+add_action( 'add_meta_boxes', 'sbmdssl_add_metabox' );
+
+function smdbssl_social_share_links_html( $post ) {
+	$value = get_post_meta( $post->ID, '_sbmdssl_hide_social_share_links', true ) || 0;
+?>
+	<label for="sbmdssl_hide_socal_share_links">
+		<?php esc_html_e( 'Hide social links', 'sbmdssl' ); ?>
+	</label>
+	<select name="sbmdssl_hide_socal_share_links" id="sbmdssl_hide_socal_share_links"
+	class="postbox">
+		<option value="0" <?php selected( $value, 0 ); ?>>
+			<?php esc_html_e( 'Show share links', 'sbmdssl' ); ?>
+		</option>
+		<option value="1" <?php selected( $value, 1 ); ?>>
+			<?php esc_html_e( 'Hide share links', 'sbmdssl' ); ?>
+		</option>
+	</select>
+<?php
+}
+
+function sbmdssl_save_postdata( $post_id ) {
+	if ( array_key_exists( 'sbmdssl_hide_socal_share_links', $_POST ) ) {
+		$value = 0;
+		if ( $_POST['sbmdssl_hide_socal_share_links'] ) {
+			$value = 1;
+		}
+		update_post_meta(
+			$post_id,
+			'_sbmdssl_hide_social_share_links',
+			$value
+		);
+	}
+}
+add_action( 'save_post', 'sbmdssl_save_postdata' );
