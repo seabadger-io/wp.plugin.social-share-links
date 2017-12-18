@@ -37,6 +37,7 @@ function sbmdssl_deactivate() {
 }
 
 function sbmdssl_add_links( $content ) {
+	global $post;
 	$hide_links = get_post_meta( $post->ID, '_sbmdssl_hide_social_share_links', true ) || 0;
 	if ( $hide_links || ( ! is_single() && ! is_page() ) ) {
 		return $content;
