@@ -38,8 +38,8 @@ function sbmdssl_deactivate() {
 
 function sbmdssl_add_links( $content ) {
 	global $post;
-	$hide_links = get_post_meta( $post->ID, '_sbmdssl_hide_social_share_links', true ) || 0;
-	if ( $hide_links || ( ! is_single() && ! is_page() ) ) {
+	$hide_links = get_post_meta( $post->ID, '_sbmdssl_hide_social_share_links', true ) || 'show';
+	if ( 'hide' === $hide_links || ( ! is_single() && ! is_page() ) ) {
 		return $content;
 	}
 	$social_links = '<br class="clear"><div class="social-share-links">' .
@@ -127,24 +127,25 @@ function sbmdssl_add_metabox() {
 			'sbmdssl_social_share_links_box',
 			esc_html__( 'Social share links',  'sbmdssl' ),
 			'smdbssl_social_share_links_html',
-			$screen
+			$screen,
+			'side'
 		);
 	}
 }
 add_action( 'add_meta_boxes', 'sbmdssl_add_metabox' );
 
 function smdbssl_social_share_links_html( $post ) {
-	$value = get_post_meta( $post->ID, '_sbmdssl_hide_social_share_links', true ) || 0;
+	$value = get_post_meta( $post->ID, '_sbmdssl_hide_social_share_links', true ) || 'show';
 ?>
 	<label for="sbmdssl_hide_socal_share_links">
-		<?php esc_html_e( 'Hide social links', 'sbmdssl' ); ?>
+		<?php esc_html_e( 'Display social links', 'sbmdssl' ); ?>
 	</label>
 	<select name="sbmdssl_hide_socal_share_links" id="sbmdssl_hide_socal_share_links"
 	class="postbox">
-		<option value="0" <?php selected( $value, 0 ); ?>>
+		<option value="show" <?php selected( $value, 'show' ); ?>>
 			<?php esc_html_e( 'Show share links', 'sbmdssl' ); ?>
 		</option>
-		<option value="1" <?php selected( $value, 1 ); ?>>
+		<option value="hide" <?php selected( $value, 'hide' ); ?>>
 			<?php esc_html_e( 'Hide share links', 'sbmdssl' ); ?>
 		</option>
 	</select>
@@ -153,9 +154,9 @@ function smdbssl_social_share_links_html( $post ) {
 
 function sbmdssl_save_postdata( $post_id ) {
 	if ( array_key_exists( 'sbmdssl_hide_socal_share_links', $_POST ) ) {
-		$value = 0;
-		if ( $_POST['sbmdssl_hide_socal_share_links'] ) {
-			$value = 1;
+		$value = 'show';
+		if ( $_POST['sbmdssl_hide_socal_share_links'] === 'hide' ) {
+			$value = 'hide';
 		}
 		update_post_meta(
 			$post_id,
