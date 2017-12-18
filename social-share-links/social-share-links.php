@@ -38,7 +38,7 @@ function sbmdssl_deactivate() {
 
 function sbmdssl_add_links( $content ) {
 	global $post;
-	$hide_links = get_post_meta( $post->ID, '_sbmdssl_display_social_share_links', true ) || 'show';
+	$hide_links = sbmdssl_sanitize_showhide( get_post_meta( $post->ID, '_sbmdssl_display_social_share_links', true ) );
 	if ( 'hide' === $hide_links || ( ! is_single() && ! is_page() ) ) {
 		return $content;
 	}
@@ -125,7 +125,7 @@ function sbmdssl_add_metabox() {
 	foreach ( $screens as $screen ) {
 		add_meta_box(
 			'sbmdssl_social_share_links_box',
-			esc_html__( 'Social share links',  'sbmdssl' ),
+			esc_html__( 'Social share links', 'sbmdssl' ),
 			'smdbssl_social_share_links_html',
 			$screen,
 			'side'
@@ -135,12 +135,12 @@ function sbmdssl_add_metabox() {
 add_action( 'add_meta_boxes', 'sbmdssl_add_metabox' );
 
 function smdbssl_social_share_links_html( $post ) {
-	$value = get_post_meta( $post->ID, '_sbmdssl_display_social_share_links', true ) || 'show';
+	$value = sbmdssl_sanitize_showhide( get_post_meta( $post->ID, '_sbmdssl_display_social_share_links', true ) );
 ?>
-	<label for="sbmdssl_hide_socal_share_links">
+	<label for="sbmdssl_display_social_share_links">
 		<?php esc_html_e( 'Display social links', 'sbmdssl' ); ?>
 	</label>
-	<select name="sbmdssl_hide_socal_share_links" id="sbmdssl_hide_socal_share_links"
+	<select name="sbmdssl_display_social_share_links" id="sbmdssl_display_social_share_links"
 	class="postbox">
 		<option value="show" <?php selected( $value, 'show' ); ?>>
 			<?php esc_html_e( 'Show share links', 'sbmdssl' ); ?>
@@ -153,11 +153,8 @@ function smdbssl_social_share_links_html( $post ) {
 }
 
 function sbmdssl_save_postdata( $post_id ) {
-	if ( array_key_exists( 'sbmdssl_hide_socal_share_links', $_POST ) ) {
-		$value = 'show';
-		if ( 'hide' === $_POST['sbmdssl_hide_socal_share_links'] ) {
-			$value = 'hide';
-		}
+	if ( array_key_exists( 'sbmdssl_display_social_share_links', $_POST ) ) {
+		$value = sbmdssl_sanitize_showhide( $_POST['sbmdssl_display_social_share_links'] );
 		update_post_meta(
 			$post_id,
 			'_sbmdssl_display_social_share_links',
@@ -166,3 +163,9 @@ function sbmdssl_save_postdata( $post_id ) {
 	}
 }
 add_action( 'save_post', 'sbmdssl_save_postdata' );
+
+function sbmdssl_sanitize_showhide( $input = '', $default = 'show' ) {
+	if ( ! in_array( $input, array( 'show', 'hide' ) ) ) {
+		return 'show';
+	}
+}
