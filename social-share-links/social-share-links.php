@@ -166,6 +166,7 @@ add_action( 'save_post', 'sbmdssl_save_postdata' );
 
 function sbmdssl_sanitize_showhide( $input = '', $default = 'show' ) {
 	if ( ! in_array( $input, array( 'show', 'hide' ) ) ) {
-		return 'show';
+		return $default;
 	}
+	return $input;
 }
