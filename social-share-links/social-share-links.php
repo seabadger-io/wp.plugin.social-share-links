@@ -38,7 +38,7 @@ function sbmdssl_deactivate() {
 
 function sbmdssl_add_links( $content ) {
 	global $post;
-	$hide_links = get_post_meta( $post->ID, '_sbmdssl_hide_social_share_links', true ) || 'show';
+	$hide_links = get_post_meta( $post->ID, '_sbmdssl_display_social_share_links', true ) || 'show';
 	if ( 'hide' === $hide_links || ( ! is_single() && ! is_page() ) ) {
 		return $content;
 	}
@@ -135,7 +135,7 @@ function sbmdssl_add_metabox() {
 add_action( 'add_meta_boxes', 'sbmdssl_add_metabox' );
 
 function smdbssl_social_share_links_html( $post ) {
-	$value = get_post_meta( $post->ID, '_sbmdssl_hide_social_share_links', true ) || 'show';
+	$value = get_post_meta( $post->ID, '_sbmdssl_display_social_share_links', true ) || 'show';
 ?>
 	<label for="sbmdssl_hide_socal_share_links">
 		<?php esc_html_e( 'Display social links', 'sbmdssl' ); ?>
@@ -155,12 +155,12 @@ function smdbssl_social_share_links_html( $post ) {
 function sbmdssl_save_postdata( $post_id ) {
 	if ( array_key_exists( 'sbmdssl_hide_socal_share_links', $_POST ) ) {
 		$value = 'show';
-		if ( $_POST['sbmdssl_hide_socal_share_links'] === 'hide' ) {
+		if ( 'hide' === $_POST['sbmdssl_hide_socal_share_links'] ) {
 			$value = 'hide';
 		}
 		update_post_meta(
 			$post_id,
-			'_sbmdssl_hide_social_share_links',
+			'_sbmdssl_display_social_share_links',
 			$value
 		);
 	}
