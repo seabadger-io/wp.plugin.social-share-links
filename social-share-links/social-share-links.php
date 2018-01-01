@@ -3,7 +3,7 @@
 Plugin Name:  SeaBadgerMD Social Share Links
 Plugin URI:   https://seabadger.io/
 Description:  Add static social share links to posts in SeaBadgerMD theme
-Version:      1.1.0
+Version:      1.2.0
 Author:       SeaBadger.io
 Author URI:   https://seabadger.io/about
 License:      GNU GPLv3 or later
