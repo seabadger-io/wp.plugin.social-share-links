@@ -39,7 +39,7 @@ function sbmdssl_deactivate() {
 function sbmdssl_add_links( $content ) {
 	global $post;
 	$hide_links = sbmdssl_sanitize_showhide( get_post_meta( $post->ID, '_sbmdssl_display_social_share_links', true ) );
-	if ( 'hide' === $hide_links || ( ! is_single() && ! is_page() ) ) {
+	if ( 'hide' === $hide_links || ( ! is_single() && ! is_page() ) || is_front_page() ) {
 		return $content;
 	}
 	$social_links = '<br class="clear"><div class="social-share-links">' .
